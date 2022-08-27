@@ -1,10 +1,9 @@
-function TodoFooter({todos, onClearCompleted}){
+function TodoFooter({todos}){
 
     const completedSize = todos.filter((todo) => todo.isCompleted).length;
     return (
         <div>
-            <span>{completedSize}/{todos.length}Completed</span>                   
-            <button onClick={onClearCompleted}>Clear completeed todos</button>
+            <span>{completedSize}Completed</span>                   
         </div>
     )
 }
