@@ -1,21 +1,22 @@
+import React, { useState } from 'react';
 import TodoItem from "./TodoItem";
 
-function TodoList({todos, onDelete, onChange1}){
-    
+function TodoList({ todos, onDelete, onChange, updateTodo }) {
+   
     return (
         <div>
             {
                 todos.map((todo) => {
                     return (
-                        <TodoItem 
-                            key={todo.id} 
+                        <TodoItem
+                            key={todo.id}
                             todo={todo}
-                            onChange={onChange1}
+                            onChange={onChange}
                             onDelete={onDelete}
-                            // handleEdit={() => handleEdit(todo.id)}
-                        />
+                            updateTodo={updateTodo}
+                            />
                     )
-                 })
+                })
             }
         </div>
     )
