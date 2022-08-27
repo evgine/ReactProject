@@ -1,59 +1,50 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import './App.css';
 import TodoFooter from './TodoFooter';
 import TodoHeader from './TodoHeader';
-import TodoList from "./TodoList"
+import TodoList from './TodoList';
 
 function App() {
   const [todos, setTodos] = useState([
     {
       id: Math.random(),
-      text: "Learn1",
+      text: "Task1",
       isCompleted: false,
-      isEdited: false
     },
     {
       id: Math.random(),
-      text: "Learn2",
+      text: "Task2",
       isCompleted: false,
-      isEdeted: false
-    },
-    {
-      id: Math.random(),
-      text: "Learn3",
-      isCompleted: false,
-      isEdeted: false
     }
   ])
-  // function handleEdit(id) {
-  //   const filteredTodos = todos.filter(todo => todo.id !== id);
-  //   const selectedTodo = todos.find(todo => todo.id === id);
-  //   setTodos({
-  //     todos:filteredTodos,
-  //     text:selectedTodo.value,
-  //     id:id,
-  //     editItem:true
-  //   })
-  // }
+
+  const handleKeyPress = useCallback((event) => {
+    if (event.shiftKey === true) {
+      /*TO DO*/ 
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   return (
     <div className="App">
-      <TodoHeader onAdd={(text) => {
-        setTodos([
-          ...todos,
-          {
-            id: Math.random(),
-            text: text,
-            isCompleted: false,
-            isEdited: false
-          }
-        ])
+
+      <TodoHeader onSubmit={(todo) => {
+        setTodos([todo, ...todos]);
       }} />
+      
       <TodoList
         todos={todos}
         onDelete={(todo) => {
           setTodos(todos.filter((t) => t.id !== todo.id));
         }}
-        onChange1={(newTodo) => {
+        onChange={(newTodo) => {
           setTodos(todos.map((todo) => {
             if (todo.id === newTodo.id) {
               return newTodo;
@@ -62,10 +53,7 @@ function App() {
           }));
         }}
         updateTodo={(todoId, newValue) => {
-            if (!newValue.text || /^\s*$/.test(newValue.text)) {
-              return;
-            }
-            setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
+            setTodos(prev => prev.map(todo => (todo.id === todoId ? newValue : todo)));
         }}
       />
       <TodoFooter todos={todos} />
