@@ -68,9 +68,7 @@ function App() {
             setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
         }}
       />
-      <TodoFooter todos={todos} onClearCompleted={() => {
-        setTodos(todos.filter((todo) => !todo.isCompleted));
-      }} />
+      <TodoFooter todos={todos} />
     </div>
   );
 }
